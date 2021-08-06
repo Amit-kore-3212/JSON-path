@@ -1,5 +1,69 @@
 import { JSONPath } from "jsonpath-plus";
 import React, { useState } from "react";
+var jlp = require("json-list-paths");
+
+const obj = {
+  id: {
+    name: "amit",
+    college: {
+      address: "something",
+    },
+  },
+  qqq: "ABCDEFGHIJKLM",
+  companyId: 334,
+  date: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+  paymentDate: "ABCDEFGHIJ",
+  status: "Cancelled",
+  type: "ReturnOrder",
+  batchCode: "ABCDEFGHIJKLM",
+  currencyCode: "ABCDEFGHIJKLMNOPQRSTUV",
+  customerUsageType: "ABCDEFGHIJKLMNOPQRSTUV",
+  entityUseCode: "ABCDEFGHIJKLM",
+  customerVendorCode: "ABCDEFGHIJK",
+  customerCode: "ABCDEFGHIJKLMNOPQRSTU",
+  exemptNo: "ABCDEFG",
+  reconciled: true,
+  locationCode: "ABCDEFGHIJKLMNO",
+  reportingLocationCode: "ABCDEFGHI",
+  purchaseOrderNo: "ABCDEFGHIJKLMNOP",
+  referenceCode: "ABCDEFGHIJKLM",
+  salespersonCode: "ABCDEFGHIJKLMNOPQRSTUVW",
+  taxOverrideType: "None",
+  taxOverrideAmount: 308.0,
+  taxOverrideReason: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+  totalAmount: 349.75,
+  totalExempt: 246.75,
+  totalDiscount: 221.25,
+  totalTax: -29.25,
+  totalTaxable: 134.25,
+  totalTaxCalculated: 366.5,
+  adjustmentReason: "SourcingIssue",
+  adjustmentDescription: "ABCD",
+  locked: false,
+  region: "AB",
+  country: "AB",
+  version: 991,
+  softwareVersion: "ABCDEFGHIJKLMNOPQRSTUVWXYZAB",
+  originAddressId: 474,
+  destinationAddressId: -19,
+  exchangeRateEffectiveDate: "ABCDEFGHIJKLMNOPQRSTUVWX",
+  exchangeRate: 963.75,
+  isSellerImporterOfRecord: false,
+  description: "ABCDEFGHIJKLMNOPQRS",
+  email: "ABCDEFGHIJKLMNOP",
+  businessIdentificationNo: "ABCDEFGHIJKLMNOPQRSTUVWXYZA",
+  modifiedDate: "ABCDEFGHIJKLMNOPQRSTUVWXYZABC",
+  modifiedUserId: 777,
+  taxDate: "ABCDEFGHIJKLMNOPQRSTUVWXYZA",
+  lines: [],
+  addresses: [],
+  locationTypes: [],
+  summary: [],
+  taxDetailsByTaxType: [],
+  parameters: [],
+  messages: [],
+  invoiceMessages: [],
+};
 
 const json = {
   id: {
@@ -971,18 +1035,20 @@ const json = {
 export const JsonPathFinder = () => {
   const [path, setPath] = useState<any>("");
   const result = JSONPath({ path: path, json });
-  console.log("result", result);
-  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setPath(event.target.value);
-  };
+  console.log(
+    "values",
+    jlp(obj)
+      .reduce({
+        match: [".items"],
+      })
+      .list({
+        keys: true,
+      })
+  );
+  console.log(jlp(obj));
   return (
     <React.Fragment>
       <h2>JSON-Path</h2>
-      <select onChange={handleChange}>
-        {Object.entries(json).map(([key, value]) => {
-          return <option>{key}</option>;
-        })}
-      </select>
     </React.Fragment>
   );
 };
